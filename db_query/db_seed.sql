@@ -1,0 +1,236 @@
+-- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: roomfinder_db
+-- ------------------------------------------------------
+-- Server version	8.0.39
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `admin` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `role` text COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `admin`
+--
+
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` VALUES (2,'admin','admin@test.com','$2y$10$aMaWXXE3xhsvFOM3XMcQbeLHizVoSmadagE02EPZpvHSYC8bftvCC','Administrator'),(3,'Kurt','admin2@test.com','$2y$10$s62hDwNRDXlKOy68ubzkvODHdl20grT4GtSiOpb7Sh0EqMw/9Fz2G','Administrator');
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `admin_jwt_token`
+--
+
+DROP TABLE IF EXISTS `admin_jwt_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `admin_jwt_token` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `admin_id` int NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `issued_at` datetime NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `status` enum('valid','revoked') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'valid',
+  PRIMARY KEY (`id`),
+  KEY `fk_admin_id` (`admin_id`),
+  CONSTRAINT `fk_admin_id` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `admin_jwt_token`
+--
+
+LOCK TABLES `admin_jwt_token` WRITE;
+/*!40000 ALTER TABLE `admin_jwt_token` DISABLE KEYS */;
+INSERT INTO `admin_jwt_token` VALUES (3,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDIyNTcyMzIsImV4cCI6MTc0MjI2MDgzMiwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTc0MjI2MDgzMn0sImlkIjoyfQ.OtNzE5XDD6gUf0mYU8FhRZ6YLAE9mTtr9IGF07Iy_IE','2025-03-18 08:20:32','2025-03-18 09:20:32','valid'),(4,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI1NjQ4MzMsImV4cCI6MTc0MjY1MTIzMywiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTc0MjU2ODQzM30sImlkIjoyfQ.Ii0okR5vjtU1J0cpwJA-8RxvGBhvg-Nu9f6rbsEgwMw','2025-03-21 21:47:13','2025-03-21 22:47:13','valid'),(5,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI3NzYwMDIsImV4cCI6MTc0Mjg2MjQwMiwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTc0Mjc3OTYwMn0sImlkIjoyfQ.O3WOWtHwjvdScqcxiV6d8872nfOAyWIy08OrHQp3o84','2025-03-24 08:26:42','2025-03-24 09:26:42','valid'),(6,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI3NzYyMjgsImV4cCI6MTc0Mjg2MjYyOCwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTc0Mjc3OTgyOH0sImlkIjoyfQ.Uaq-eX_uND34up2lLpa9yeWMY101p629PPYvyS9aH9U','2025-03-24 08:30:28','2025-03-24 09:30:28','valid'),(7,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI3ODU5OTIsImV4cCI6MTc0Mjg3MjM5MiwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTc0Mjc4OTU5Mn0sImlkIjoyfQ.ZHCKDJrkYDFXkD15SUbl0l5XVijtqvGXOeskrhRJbsU','2025-03-24 11:13:12','2025-03-24 12:13:12','valid'),(13,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI5NTA0NzksImV4cCI6MTc0MzAzNjg3OSwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQyOTU0MDc5fSwiaWQiOjJ9.G1Knp_Aiybz3wdzJYF46UnHQTNzwq-eEthbVC2ARahM','2025-03-26 08:54:39','2025-03-26 09:54:39','valid'),(14,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI5NzQ3NjksImV4cCI6MTc0MzA2MTE2OSwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQyOTc4MzY5fSwiaWQiOjJ9.Vb5Mg9cDJF1Sfq7OElg8ZjdN4lQfFmITKtH_Ha1Hq0Y','2025-03-26 15:39:29','2025-03-26 16:39:29','valid'),(15,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI5Nzg3MjYsImV4cCI6MTc0MzA2NTEyNiwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQyOTgyMzI2fSwiaWQiOjJ9.Se1btIY7ziy2gVq_VYnLdtpAxvl2K-ATSwRaEYlXzaU','2025-03-26 16:45:26','2025-03-26 17:45:26','valid'),(16,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMwNzM2MjEsImV4cCI6MTc0MzE2MDAyMSwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMDc3MjIxfSwiaWQiOjJ9.MtVrm04Sv5GIG-uCxoVeUB3zSoXKT4hmJWfN5HhUnlI','2025-03-27 19:07:01','2025-03-27 20:07:01','valid'),(17,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMwNzM2MzQsImV4cCI6MTc0MzE2MDAzNCwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMDc3MjM0fSwiaWQiOjJ9.XBdA4Flk4C9gqXa-9_3YYoqu8RMRjSLHjydr6Lrje6k','2025-03-27 19:07:14','2025-03-27 20:07:14','valid'),(19,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMxNzIyNDUsImV4cCI6MTc0MzI1ODY0NSwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMTc1ODQ1fSwiaWQiOjJ9.0aWw30mSb8igxJdiWbOwVesNXrXOd7HewRajugeQ8yk','2025-03-28 22:30:45','2025-03-28 23:30:45','valid'),(20,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMxNzYzMTEsImV4cCI6MTc0MzI2MjcxMSwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMTc5OTExfSwiaWQiOjJ9.e47Elh3EXoV0n8eBLp4lHcAAZ7uZI-DHqeZXgY9BK80','2025-03-28 23:38:31','2025-03-29 00:38:31','valid'),(21,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMyMDkxMTQsImV4cCI6MTc0MzI5NTUxNCwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMjEyNzE0fSwiaWQiOjJ9.WGJ83GiPAmySkFsSMdVHv_VttYqP8FucTNRyMOJG_gs','2025-03-29 08:45:14','2025-03-29 09:45:14','valid'),(22,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMyMDk4OTcsImV4cCI6MTc0MzI5NjI5NywiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMjEzNDk3fSwiaWQiOjJ9.Pzn4r2-kKIHx75kJMdHtI-QYTyODbdhwlMgvJHSeHgo','2025-03-29 08:58:17','2025-03-29 09:58:17','valid'),(23,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMyMDk5NjAsImV4cCI6MTc0MzI5NjM2MCwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMjEzNTYwfSwiaWQiOjJ9.vMCRU_BhcxZT2UIqcPQEz1K790UkFntq7MGNvT6h484','2025-03-29 08:59:20','2025-03-29 09:59:20','valid'),(24,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMyMTE4MTMsImV4cCI6MTc0MzI5ODIxMywiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMjE1NDEzfSwiaWQiOjJ9.m_mcQt_uQndDS8RzI_zv_sHYeYy9FW1Vx0fLVycUiSY','2025-03-29 09:30:13','2025-03-29 10:30:13','valid'),(25,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMyMTMzNDksImV4cCI6MTc0MzI5OTc0OSwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMjE2OTQ5fSwiaWQiOjJ9.breMfAkIPI6HySDrLBv81MAgr4AU-iAMLSl343KtPzM','2025-03-29 09:55:49','2025-03-29 10:55:49','valid'),(26,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMyNjQ2NjcsImV4cCI6MTc0MzM1MTA2NywiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMjY4MjY3fSwiaWQiOjJ9.c4II5mTJEL_DI9uGX1rELScVk02Db9dulGPuFMBUugA','2025-03-30 00:11:07','2025-03-30 01:11:07','valid'),(31,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMyNjY2MDMsImV4cCI6MTc0MzM1MzAwMywiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMjcwMjAzfSwiaWQiOjJ9.8P9QejQQGpOnW-pzoblO-v2Cx-8y4ONiafe3DE8NCuc','2025-03-30 00:43:23','2025-03-30 01:43:23','valid'),(34,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMzNDgwMTgsImV4cCI6MTc0MzQzNDQxOCwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMzUxNjE4fSwiaWQiOjJ9.25KAkik0eFKYVIDXHU2wO0B-Y9teLTA_RnyP2oZfeB0','2025-03-30 23:20:18','2025-03-31 00:20:18','valid'),(35,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMzNzk2ODAsImV4cCI6MTc0MzQ2NjA4MCwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMzgzMjgwfSwiaWQiOjJ9.aSA8b_Oo4Enqut5oQ-stmNL4oZv3n4E7PzjgvmA7Efo','2025-03-31 08:08:00','2025-03-31 09:08:00','valid'),(36,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMzNzk2OTIsImV4cCI6MTc0MzQ2NjA5MiwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQzMzgzMjkyfSwiaWQiOjJ9.AEjTa-ehqb4Sad3TaVgHgvtY0nlIy3yXRGn2NMHKbyQ','2025-03-31 08:08:12','2025-03-31 09:08:12','valid'),(38,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDQxMTMzODIsImV4cCI6MTc0NDE5OTc4MiwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQ0MTE2OTgyfSwiaWQiOjJ9.kZNfcVd5zGyhr837KzjkG67O2uVXeW0qu0P1k8hQLAc','2025-04-08 19:56:22','2025-04-08 20:56:22','valid'),(39,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDQxMTM0MTUsImV4cCI6MTc0NDE5OTgxNSwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQ0MTE3MDE1fSwiaWQiOjJ9.ydAkE1KqFKRYNNIaGTDEmArHEoBYlWyUo7mxNhspNGU','2025-04-08 19:56:55','2025-04-08 20:56:55','valid'),(40,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDQxMTM0MjIsImV4cCI6MTc0NDE5OTgyMiwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQ0MTE3MDIyfSwiaWQiOjJ9.rvLU3WurcaUQfWhUJrq05-uFWlobSNguyWZsnVUL48Q','2025-04-08 19:57:02','2025-04-08 20:57:02','valid'),(41,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDQxMTM0NTEsImV4cCI6MTc0NDE5OTg1MSwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQ0MTE3MDUxfSwiaWQiOjJ9.q_lZSlvEE13Qz4SHi7Es_aGydqZ8q9FMyOQkOzlXsH4','2025-04-08 19:57:31','2025-04-08 20:57:31','valid'),(42,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDQxMTM0NjEsImV4cCI6MTc0NDE5OTg2MSwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQ0MTE3MDYxfSwiaWQiOjJ9.kbX5svDKf2Cfn5TS91TyJRCR_xy-URMtv6rq9AR1IHc','2025-04-08 19:57:41','2025-04-08 20:57:41','valid'),(43,2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDQxMTM0NjYsImV4cCI6MTc0NDE5OTg2NiwiZGF0YSI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzQ0MTE3MDY2fSwiaWQiOjJ9.2WTbWA0ZLyTglQxZ9juDvVmAfpi7aZ1TJHk2cR3PJbA','2025-04-08 19:57:46','2025-04-08 20:57:46','valid'),(44,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NzE3NTQzMTgsImV4cCI6MTc3MTg0MDcxOCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJLdXJ0Iiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3NzE3NTc5MTh9LCJpZCI6M30.m1ZB-6LByh1FSvMZ5otYcoXMx2HhxoW0M7DUg54vy4Y','2026-02-22 17:58:38','2026-02-22 18:58:38','valid'),(46,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NzE3NTYwMjAsImV4cCI6MTc3MTg0MjQyMCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJLdXJ0Iiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3NzE3NTk2MjB9LCJpZCI6M30.HeTCJ1BJLTAdOEk8NkQboVWdu6jNvolPTIpwwYcNFro','2026-02-22 18:27:00','2026-02-22 19:27:00','valid'),(47,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NzE3NTYxMDQsImV4cCI6MTc3MTg0MjUwNCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJLdXJ0Iiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3NzE3NTk3MDR9LCJpZCI6M30.x0K0UrbK8Krv9_N-93Et1iETyALn8DDOmtUqFAmnvGE','2026-02-22 18:28:24','2026-02-22 19:28:24','valid'),(48,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NzE3NTYxMDYsImV4cCI6MTc3MTg0MjUwNiwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJLdXJ0Iiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3NzE3NTk3MDZ9LCJpZCI6M30.5QBmPVTEUHBmD_xGjz0x7VcvsX4y2NTMlaPxN7BAY3c','2026-02-22 18:28:26','2026-02-22 19:28:26','valid'),(49,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NzE3NTYxMDYsImV4cCI6MTc3MTg0MjUwNiwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJLdXJ0Iiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3NzE3NTk3MDZ9LCJpZCI6M30.5QBmPVTEUHBmD_xGjz0x7VcvsX4y2NTMlaPxN7BAY3c','2026-02-22 18:28:26','2026-02-22 19:28:26','valid'),(50,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NzE3NTYxMDcsImV4cCI6MTc3MTg0MjUwNywiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJLdXJ0Iiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3NzE3NTk3MDd9LCJpZCI6M30.C2kHX5ftuEOB6iyvoEOhmBBOYP_uq1mZDpFOHWZlMKg','2026-02-22 18:28:27','2026-02-22 19:28:27','valid'),(51,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NzE3NTYxMDgsImV4cCI6MTc3MTg0MjUwOCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJLdXJ0Iiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3NzE3NTk3MDh9LCJpZCI6M30.lyrf_yaCgyjYCesgDyY36Xs35Pca19I4qkvxwIArshk','2026-02-22 18:28:28','2026-02-22 19:28:28','valid'),(52,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NzQ1Nzc4MzEsImV4cCI6MTc3NDY2NDIzMSwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJLdXJ0Iiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3NzQ1ODE0MzF9LCJpZCI6M30.1onngfF19xDQQUa_A6e5w3-Nt-ZVMrUsR3sMNSKojvI','2026-03-27 10:17:11','2026-03-27 11:17:11','valid'),(53,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NzQ1Nzc5NjUsImV4cCI6MTc3NDY2NDM2NSwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJLdXJ0Iiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3NzQ1ODE1NjV9LCJpZCI6M30.89CEPcxagvRvkuLhTo61zqHnzdz2-2Jza9DHUvFh55k','2026-03-27 10:19:25','2026-03-27 11:19:25','valid'),(54,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NzQ1Nzc5NjksImV4cCI6MTc3NDY2NDM2OSwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJLdXJ0Iiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJleHAiOjE3NzQ1ODE1Njl9LCJpZCI6M30.2w2Nd_IxMryidLWUusZlt05b6c_oAJMSEt9ZTkddYj8','2026-03-27 10:19:29','2026-03-27 11:19:29','valid');
+/*!40000 ALTER TABLE `admin_jwt_token` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `room`
+--
+
+DROP TABLE IF EXISTS `room`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `room` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `room_building` text COLLATE utf8mb4_general_ci NOT NULL,
+  `room_number` int NOT NULL,
+  `status` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `equipment` text COLLATE utf8mb4_general_ci,
+  `capacity` int DEFAULT NULL,
+  `room_type` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `room`
+--
+
+LOCK TABLES `room` WRITE;
+/*!40000 ALTER TABLE `room` DISABLE KEYS */;
+INSERT INTO `room` VALUES (1,'PTC',210,'Available','Air Conditioner, Monitor, Wi-Fi',50,'Lecture','2025-03-27 07:10:18'),(2,'PTC',211,'Available','Monitor, Wi-Fi',50,'Lecture','2025-03-27 07:10:18'),(3,'PTC',219,'Available','Air Conditioner, Computer, Whiteboard',50,'Lecture','2025-03-27 07:10:18'),(4,'PTC',218,'Available','Wi-Fi, Whiteboard',50,'Lecture','2025-03-27 07:10:18'),(5,'PTC',216,'Available','Monitor, Wi-Fi',50,'Lecture','2025-03-27 07:10:18'),(6,'PTC',213,'Available','Air Conditioner, Computer',50,'Lecture','2025-03-27 07:10:18'),(7,'ITS',211,'Available','Monitor, Wi-Fi',50,'Lecture','2025-03-27 07:10:18'),(8,'ITS',122,'Available','Wi-Fi',50,'Lecture','2025-03-27 07:10:18'),(9,'ITS',123,'Available','Air Conditioner, Monitor',50,'Lecture','2025-03-27 07:10:18'),(10,'ITS',124,'Available','Whiteboard',50,'Lecture','2025-03-27 07:10:18'),(11,'ITS',127,'Available','Wi-Fi, Monitor',50,'Lecture','2025-03-27 07:10:18'),(12,'ITS',128,'Available','Air Conditioner',50,'Lecture','2025-03-27 07:10:18'),(13,'ITS',129,'Available','Computer, Wi-Fi',50,'Lecture','2025-03-27 07:10:18'),(14,'ITS',100,'Available','Wi-Fi, Monitor',50,'Lecture','2025-03-27 07:10:18'),(15,'PTC',233,'Available','Air Conditioner, Computer',50,'Lecture','2025-03-27 07:10:18'),(16,'PTC',400,'Available','Monitor, Wi-Fi, Whiteboard',50,'Lecture','2025-03-27 07:10:18'),(17,'PTC',900,'Available','Air Conditioner, Whiteboard',50,'Lecture','2025-03-27 07:10:18'),(18,'PTC',201,'Available','Wi-Fi',50,'Lecture','2025-03-27 07:10:18'),(19,'PTC',202,'Available','Computer',50,'Lecture','2025-03-27 07:10:18'),(20,'PTC',203,'Available','Air Conditioner',50,'Lecture','2025-03-27 07:10:18'),(21,'PTC',204,'Available','Wi-Fi, Computer',50,'Lecture','2025-03-27 07:10:18'),(22,'PTC',205,'Available','Monitor, Wi-Fi',50,'Lecture','2025-03-27 07:10:18'),(23,'PTC',206,'Available','Air Conditioner, Monitor',50,'Lecture','2025-03-27 07:10:18'),(24,'PTC',207,'Available','Wi-Fi',50,'Lecture','2025-03-27 07:10:18'),(25,'PTC',208,'Available','Air Conditioner, Whiteboard',50,'Lecture','2025-03-27 07:10:18');
+/*!40000 ALTER TABLE `room` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `room_request`
+--
+
+DROP TABLE IF EXISTS `room_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `room_request` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `room_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `block` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `purpose` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `date` date NOT NULL,
+  `starting_time` time NOT NULL,
+  `ending_time` time NOT NULL,
+  `status` varchar(50) COLLATE utf8mb4_general_ci DEFAULT 'Pending',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`user_id`),
+  CONSTRAINT `room_request_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `room_request`
+--
+
+LOCK TABLES `room_request` WRITE;
+/*!40000 ALTER TABLE `room_request` DISABLE KEYS */;
+INSERT INTO `room_request` VALUES (158,8,3,'1','for lecture','2025-12-12','11:00:00','12:00:00','Rejected','2025-03-21 22:08:34'),(162,3,3,'4','Software Development Lab','2025-03-22','15:08:00','16:08:00','Rejected','2025-03-21 23:08:06'),(163,27,3,'2','Software Development Lab','2025-03-27','22:45:00','23:45:00','Rejected','2025-03-27 22:36:56'),(164,53,3,'3','Network Workshop','2025-03-28','22:00:00','23:00:00','Approved','2025-03-28 21:05:42');
+/*!40000 ALTER TABLE `room_request` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `room_schedule`
+--
+
+DROP TABLE IF EXISTS `room_schedule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `room_schedule` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `room_id` int NOT NULL,
+  `block` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `date` date NOT NULL,
+  `starting_time` time NOT NULL,
+  `ending_time` time NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `room_schedule_ibfk_1` (`room_id`),
+  CONSTRAINT `fk_room_id` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `room_id` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `room_schedule`
+--
+
+LOCK TABLES `room_schedule` WRITE;
+/*!40000 ALTER TABLE `room_schedule` DISABLE KEYS */;
+INSERT INTO `room_schedule` VALUES (49,1,'Block 1','2025-03-26','09:00:00','10:00:00'),(53,5,'Block 5','2025-03-26','13:00:00','14:00:00'),(54,6,'Block 6','2025-03-26','14:00:00','15:00:00'),(55,7,'Block 7','2025-03-26','15:00:00','16:00:00'),(56,8,'Block 8','2025-03-26','16:00:00','17:00:00'),(57,9,'Block 9','2025-03-26','09:30:00','10:30:00'),(58,10,'Block 10','2025-03-26','10:30:00','11:30:00'),(59,11,'Block 11','2025-03-26','11:30:00','12:30:00'),(60,12,'Block 12','2025-03-26','12:30:00','13:30:00'),(61,13,'Block 13','2025-03-26','13:30:00','14:30:00'),(62,14,'Block 14','2025-03-26','14:30:00','15:30:00'),(63,15,'Block 15','2025-03-26','15:30:00','16:30:00'),(64,16,'Block 16','2025-03-26','16:30:00','17:30:00'),(65,17,'Block 17','2025-03-26','09:00:00','10:00:00'),(66,18,'Block 18','2025-03-26','10:00:00','11:00:00'),(67,19,'Block 19','2025-03-26','11:00:00','12:00:00'),(69,21,'Block 21','2025-03-26','13:00:00','14:00:00'),(99,1,'Block 1','2025-03-30','12:38:00','13:37:59');
+/*!40000 ALTER TABLE `room_schedule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `teacher_id` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `username` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `role` text COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (3,'12-32-4584','Ben','test@test.com','$2y$10$T/S1VJXct.AOvKRCfgoqZO/kgMAm2ledP5lbxL7zG26s7YIlRWrpi','teacher');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_jwt_token`
+--
+
+DROP TABLE IF EXISTS `user_jwt_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_jwt_token` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `issued_at` datetime NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `status` enum('valid','revoked') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'valid',
+  PRIMARY KEY (`id`),
+  KEY `fk_user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_jwt_token`
+--
+
+LOCK TABLES `user_jwt_token` WRITE;
+/*!40000 ALTER TABLE `user_jwt_token` DISABLE KEYS */;
+INSERT INTO `user_jwt_token` VALUES (1,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDE3NjA0NjMsImV4cCI6MTc0MTc2NDA2MywiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0Iiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDE3NjQwNjN9LCJpZCI6M30.1ZaVaC6Ktd4CdOoiIoy2gyOTxejJ_yGnw2nSJQxBzAs','2025-03-12 14:21:03','2025-03-12 15:21:03','valid'),(2,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDIwMjE0NTYsImV4cCI6MTc0MjAyNTA1NiwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0Iiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDIwMjUwNTZ9LCJpZCI6M30.jHwpwHa3aDBPs6OOPG2WDrel2Hu_CV988iqRVomD29U','2025-03-15 14:50:56','2025-03-15 15:50:56','valid'),(3,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDIwMjE2NDMsImV4cCI6MTc0MjAyNTI0MywiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0Iiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDIwMjUyNDN9LCJpZCI6M30.A36TNmhZ4GsvcGmxxL040WbqG1AcorxtHlbtXfAQgnM','2025-03-15 14:54:03','2025-03-15 15:54:03','valid'),(4,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDIwMjI1ODQsImV4cCI6MTc0MjAyNjE4NCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0Iiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDIwMjYxODR9LCJpZCI6M30.nfc9Klcb2sG0RfiNfAsaJUS7ttIzNqNmwnBDJTg3Jhk','2025-03-15 15:09:44','2025-03-15 16:09:44','valid'),(5,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDIwMjI2MjMsImV4cCI6MTc0MjAyNjIyMywiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0Iiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDIwMjYyMjN9LCJpZCI6M30.DkL4QwMG__LuygXa6otLJArUXRfR7wXmeIDQhsOECfk','2025-03-15 15:10:23','2025-03-15 16:10:23','valid'),(6,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDIyMDg5MjAsImV4cCI6MTc0MjIxMjUyMCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0Iiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDIyMTI1MjB9LCJpZCI6M30.zp-stVltyiCpB1Wk0Zen4Vv9Vor7xl2B-nsBIoyqTVI','2025-03-17 18:55:20','2025-03-17 19:55:20','valid'),(7,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDIyMDkwODQsImV4cCI6MTc0MjIxMjY4NCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0Iiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDIyMTI2ODR9LCJpZCI6M30.sRcXuCEIbtK7pcb6OjZmV9Y_p3cUaD8mZopjgVfk4mc','2025-03-17 18:58:04','2025-03-17 19:58:04','valid'),(8,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDIyMDkzNzgsImV4cCI6MTc0MjIxMjk3OCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0Iiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDIyMTI5Nzh9LCJpZCI6M30.Ko-s0zOX8k6IPREZmiArkMS6F11yuW6w09a782zY5ig','2025-03-17 19:02:58','2025-03-17 20:02:58','valid'),(9,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDIyMTUxODksImV4cCI6MTc0MjIxODc4OSwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0Iiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDIyMTg3ODl9LCJpZCI6M30.8rB1k8Y4Kc_gIC4YWycu6jgV7otaBm_JX8LrZNOXwHw','2025-03-17 20:39:49','2025-03-17 21:39:49','valid'),(10,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDIyMTUyNjEsImV4cCI6MTc0MjIxODg2MSwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0Iiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDIyMTg4NjF9LCJpZCI6M30.TOmTr9rsTCXec8RdWArCEV-cI-dXYRBfplxfe0nnn8A','2025-03-17 20:41:01','2025-03-17 21:41:01','valid'),(11,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI1MjQ4MDYsImV4cCI6MTc0MjUyODQwNiwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVyIiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDI1Mjg0MDZ9LCJpZCI6M30.x36R_58Ue3GhLEubB5uugAm3jI0pImZfHUSrpp43DrM','2025-03-21 10:40:06','2025-03-21 11:40:06','valid'),(12,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI1MzAyODgsImV4cCI6MTc0MjUzMzg4OCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVyIiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDI1MzM4ODh9LCJpZCI6M30.LOTlcYxZ2rM_h335opNs_Sawkf0Zb0OByU3Bp-qksDw','2025-03-21 12:11:28','2025-03-21 13:11:28','valid'),(13,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI1MzAzNjIsImV4cCI6MTc0MjUzMzk2MiwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJKb3NodWEgRGFjYXNpbiIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQyNTMzOTYyfSwiaWQiOjN9.BkG-5IyAWUmve7iGZL-ni6TCzteHhpyEW-bnfUw6SvE','2025-03-21 12:12:42','2025-03-21 13:12:42','valid'),(14,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI1MzI4NjMsImV4cCI6MTc0MjUzNjQ2MywiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJTaXIuIERhY2FzaW4iLCJyb2xlIjoidGVhY2hlciIsImV4cCI6MTc0MjUzNjQ2M30sImlkIjozfQ.MjE5PiY6fAcX17ZhsIw9YWun-MocyXLVZrqGJjLNzvs','2025-03-21 12:54:23','2025-03-21 13:54:23','valid'),(15,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI1MzI5MTYsImV4cCI6MTc0MjUzNjUxNiwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiIiLCJyb2xlIjoidGVhY2hlciIsImV4cCI6MTc0MjUzNjUxNn0sImlkIjozfQ.oaSAij40DqcmTGjtXJVH3Cz_Uvrdo_qLgCYrUlSA0_U','2025-03-21 12:55:16','2025-03-21 13:55:16','valid'),(16,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI1NTExNzEsImV4cCI6MTc0MjU1NDc3MSwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiIzMjMxMiIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQyNTU0NzcxfSwiaWQiOjN9.X9tA8010_JT-b_eish4NBhDqlPzo9hVt-3jGy9lEQJA','2025-03-21 17:59:31','2025-03-21 18:59:31','valid'),(17,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI1NjIxODQsImV4cCI6MTc0MjU2NTc4NCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJkYWNzIDEyMyIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQyNTY1Nzg0fSwiaWQiOjN9.hxWHmDz_BwnYD9V11OLH_ec0yMUhn6UU1Aao1V06gsg','2025-03-21 21:03:04','2025-03-21 22:03:04','valid'),(18,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI1NjYwMzksImV4cCI6MTc0MjY1MjQzOSwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJkYWNzIDEyMyIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQyNTY5NjM5fSwiaWQiOjN9.Fq5NXBHTuHHecaVh-7BxmScSEnIBhTQyIWWr9MMSfnc','2025-03-21 22:07:19','2025-03-21 23:07:19','valid'),(19,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI1Njk2MzYsImV4cCI6MTc0MjY1NjAzNiwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVyIiwicm9sZSI6InRlYWNoZXIiLCJleHAiOjE3NDI1NzMyMzZ9LCJpZCI6M30.fm8f2H-v8lnCTFcOsDBACgn1I62VYhz3kBl1MixWn9U','2025-03-21 23:07:16','2025-03-22 00:07:16','valid'),(20,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI4MTI0MzQsImV4cCI6MTc0Mjg5ODgzNCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVycyIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQyODE2MDM0fSwiaWQiOjN9.NqwEH-DX-JrRFuHkDUk3Ech8TI6antp7GTA-NSvCH9Y','2025-03-24 18:33:54','2025-03-24 19:33:54','valid'),(21,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI5NTEwNzcsImV4cCI6MTc0MzAzNzQ3NywiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVycyIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQyOTU0Njc3fSwiaWQiOjN9.x6yoHOW3i73m1RvOuhxC_eSarH0m6Ng-eEJ-X7dkQgQ','2025-03-26 09:04:37','2025-03-26 10:04:37','valid'),(22,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI5OTIzNjksImV4cCI6MTc0MzA3ODc2OSwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVycyIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQyOTk1OTY5fSwiaWQiOjN9.JfGFD7x4mxljfX28XnBxdl-_NrwKRWefMGatYMv9Iqw','2025-03-26 20:32:49','2025-03-26 21:32:49','valid'),(23,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMwNjg2MTksImV4cCI6MTc0MzE1NTAxOSwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVycyIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQzMDcyMjE5fSwiaWQiOjN9.8OqmZ02PDj1cBcFYyLKKTLsqQ0AEKamy7q2h6QCDces','2025-03-27 17:43:39','2025-03-27 18:43:39','valid'),(24,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMwODEzMzIsImV4cCI6MTc0MzE2NzczMiwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVycyIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQzMDg0OTMyfSwiaWQiOjN9.vriQSEGKiWsqdmZZ5R9_FN9Uv9odBRYUgoc-ivvaOwY','2025-03-27 21:15:32','2025-03-27 22:15:32','valid'),(25,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMwODU5MjksImV4cCI6MTc0MzE3MjMyOSwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVycyIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQzMDg5NTI5fSwiaWQiOjN9.930sYaKeiFiYY_rJZyVxtKj27VYQYeF27s6FyzPjWBo','2025-03-27 22:32:09','2025-03-27 23:32:09','valid'),(26,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMxMjM0MDMsImV4cCI6MTc0MzIwOTgwMywiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVycyIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQzMTI3MDAzfSwiaWQiOjN9.sOfRksEi4B3xISlDiFHjNioDEGzlt_XAaX2wNwp6ybs','2025-03-28 08:56:43','2025-03-28 09:56:43','valid'),(27,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMxNjQ2MDgsImV4cCI6MTc0MzI1MTAwOCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVycyIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQzMTY4MjA4fSwiaWQiOjN9.PdLg3o6QXpTd4c-GSTI06O0nQiq0le0cQW4ezzmDu4s','2025-03-28 20:23:28','2025-03-28 21:23:28','valid'),(28,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMyNjY1NDAsImV4cCI6MTc0MzM1Mjk0MCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVycyIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQzMjcwMTQwfSwiaWQiOjN9.wqD9k0Oqt0ZI97ta50dUMHarsZkM7cLyQcgTEw4qJUE','2025-03-30 00:42:20','2025-03-30 01:42:20','valid'),(29,3,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDMzNTE5MDQsImV4cCI6MTc0MzQzODMwNCwiZGF0YSI6eyJpZCI6MywidXNlcm5hbWUiOiJ0ZWFjaGVycyIsInJvbGUiOiJ0ZWFjaGVyIiwiZXhwIjoxNzQzMzU1NTA0fSwiaWQiOjN9.xsu4_9sTDtP4emolZIGM5WtMEuVxmNs-2bXaNFgFOp4','2025-03-31 00:25:04','2025-03-31 01:25:04','valid');
+/*!40000 ALTER TABLE `user_jwt_token` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-03-27 10:45:43

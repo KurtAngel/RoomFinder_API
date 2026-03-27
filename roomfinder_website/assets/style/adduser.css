@@ -22,13 +22,13 @@
     padding: 10px;
     border-radius: 5px; 
     background-color: #DAFFEA;
-    appearance: none;   /* Remove default dropdown arrow */
-    -webkit-appearance: none;  /* For Safari */
-    background-image: url('../images/web-svg-icons/dropdown-arrow-black.svg'); /* Custom arrow image */
+    appearance: none;   
+    -webkit-appearance: none;  
+    background-image: url('../images/web-svg-icons/dropdown-arrow-black.svg'); 
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 15px;
-    padding-right: 30px;  /* Add space for the custom arrow */
+    padding-right: 30px;  
     font-weight: bold;
     width: 100%;
 }
@@ -82,8 +82,13 @@
 }
 
 .adduser-container {
+    margin-top: 100px;
     display: flex;
-    gap: 20px;
+    gap: 120px;
+}
+
+.addUserButtons .backBtn {
+    background-color: #d9534f;
 }
 
 @media screen and (max-width: 600px) {
@@ -92,6 +97,8 @@
     }
 
     .adduser-container {
+        margin-top: 0px;
+        gap: 20px;
         width: 100%;
         display: flex;
         flex-direction: column;
